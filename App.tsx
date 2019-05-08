@@ -17,20 +17,20 @@ import { AppLoading, Asset } from 'expo';
 import { Block, GalioProvider } from 'galio-framework';
 
 import Screens from './navigation/Screens';
-import { Images, products, materialTheme } from './constants/';
+import { Images, products, materialTheme } from './constants';
 
 // cache app images
 const assetImages = [
   Images.Pro,
   Images.Profile,
   Images.Avatar,
-  Images.Onboarding,
+  Images.Onboarding
 ];
 
 // cache product images
-products.map(product => assetImages.push(product.image));
+products.forEach(product => assetImages.push(product.image));
 
-function cacheImages(images) {
+function cacheImages(images: any[]) {
   return images.map(image => {
     if (typeof image === 'string') {
       return Image.prefetch(image);
@@ -42,11 +42,11 @@ function cacheImages(images) {
 
 export default class App extends React.Component {
   state = {
-    isLoadingComplete: false,
+    isLoadingComplete: false
   };
 
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    if (!this.state.isLoadingComplete) {
       return (
         <AppLoading
           startAsync={this._loadResourcesAsync}
@@ -66,13 +66,11 @@ export default class App extends React.Component {
     }
   }
 
-  _loadResourcesAsync = async () => {
-    return Promise.all([
-      ...cacheImages(assetImages),
-    ]);
+  _loadResourcesAsync = async (): Promise<any> => {
+    return Promise.all([...cacheImages(assetImages)]);
   };
 
-  _handleLoadingError = error => {
+  _handleLoadingError = (error: Error): void => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);

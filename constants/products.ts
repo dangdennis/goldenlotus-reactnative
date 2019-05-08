@@ -1,4 +1,11 @@
-export default [
+export interface Product {
+  title: string
+  image: string
+  price: number
+  horizontal?: boolean
+}
+
+export default <Product[]>[
   {
     title: 'Hardly Anything Takes More Coura...',
     image: 'https://source.unsplash.com/dS2hi__ZZMk/840x840',
